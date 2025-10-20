@@ -11,10 +11,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/App.tsx:15
-msgid "hello"
-msgstr "hola"
-
 #: src/App.tsx:11
 msgid "change locale"
 msgstr "cambiar idioma"
+
+#: src/App.tsx:15
+msgid "hello"
+msgstr "hola"

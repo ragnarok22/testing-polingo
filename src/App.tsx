@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div>
-      Locale: {locale}
+      <p>Current locale: {locale}</p>
       <button onClick={() => setLocale(locale === 'en' ? 'es' : 'en')}>
         {t('change locale')}
       </button>

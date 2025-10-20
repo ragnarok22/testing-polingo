@@ -98,7 +98,7 @@ There are two approaches to adding new translations:
 
 4. **Compile to JSON:**
    ```bash
-   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   pnpm i18n:compile
    ```
 
 5. **Refresh the browser** to see your new translations!
@@ -133,7 +133,7 @@ There are two approaches to adding new translations:
 
 4. **Compile to JSON:**
    ```bash
-   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   pnpm i18n:compile
    ```
 
 ### Removing Translations
@@ -142,7 +142,7 @@ There are two approaches to adding new translations:
 2. **Remove the entry** from `.po` files in `locales/en/` and `locales/es/`
 3. **Recompile to JSON:**
    ```bash
-   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   pnpm i18n:compile
    ```
 
 ### Validating Translations
@@ -151,54 +151,74 @@ Check for missing or fuzzy translations:
 
 ```bash
 # Basic validation
-node ../polingo/packages/cli/dist/cli.js validate locales
+pnpm i18n:validate
 
 # Strict validation (fails on fuzzy entries)
-node ../polingo/packages/cli/dist/cli.js validate locales --strict
+pnpm i18n:validate:strict
 ```
 
-## 🔧 CLI Commands Reference
+## 🔧 npm Scripts Reference
 
-All commands assume you're in the `testing-polingo` directory and have built the Polingo CLI:
+This project includes convenient npm scripts for managing translations:
 
-### Build the CLI (do this first!)
+### First-Time Setup
 
 ```bash
-cd ../polingo
-pnpm --filter @polingo/cli build
-cd ../testing-polingo
+# Build CLI and compile existing translations
+pnpm i18n:init
 ```
 
-### Extract Messages
+### Extract Messages from Source Code
 
 ```bash
-node ../polingo/packages/cli/dist/cli.js extract src/ --out locales/messages.pot --locales locales
+# Scans src/ and updates .po files in locales/
+pnpm i18n:extract
 ```
 
-**Options:**
-- `src/` - Directory to scan for translation calls
-- `--out` - Output path for `.pot` template
-- `--locales` - Path to locales directory (will update existing `.po` files)
+Extracts all translation calls (`t()`, `tn()`, `tp()`, `tnp()`) from your source code and updates the `.po` files.
 
 ### Compile Translations
 
 ```bash
-node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+# Compiles .po files to JSON format for runtime
+pnpm i18n:compile
 ```
 
-**Options:**
-- `locales/` - Input directory containing `.po` files
-- `--format` - Output format: `json` or `mo` (default: `json`)
-- `--out` - Output directory for compiled files
+Converts `.po` files in `locales/` to JSON files in `public/i18n/`.
 
 ### Validate Translations
 
 ```bash
-# Basic validation
-node ../polingo/packages/cli/dist/cli.js validate locales
+# Check for missing translations
+pnpm i18n:validate
 
-# Strict mode (fails on fuzzy translations)
-node ../polingo/packages/cli/dist/cli.js validate locales --strict
+# Strict mode (fails on fuzzy entries)
+pnpm i18n:validate:strict
+```
+
+### Complete Update Workflow
+
+```bash
+# Extract + Compile in one command
+pnpm i18n:update
+```
+
+This is useful after adding new translation strings to your code.
+
+### Manual CLI Commands (Advanced)
+
+If you prefer to use the CLI directly:
+
+```bash
+# Extract
+polingo extract src/ --out locales/messages.pot --locales locales
+
+# Compile
+polingo compile locales/ --format json --out public/i18n
+
+# Validate
+polingo validate locales
+polingo validate locales --strict
 ```
 
 ## 🎨 Features Tested

@@ -8,8 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "extract": "polingo extract",
-    "validate": "polingo validate"
+    "i18n:extract": "polingo extract src/ --out locales/messages.pot --locales locales",
+    "i18n:compile": "polingo compile locales/ --format json --out public/i18n",
+    "i18n:validate": "polingo validate locales",
+    "i18n:validate:strict": "polingo validate locales --strict",
+    "i18n:update": "pnpm i18n:extract && pnpm i18n:compile",
+    "i18n:init": "pnpm --filter @polingo/cli build && pnpm i18n:compile"
   },
   "dependencies": {
     "react": "^19.1.1",

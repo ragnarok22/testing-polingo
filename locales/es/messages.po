@@ -11,24 +11,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/App.tsx:16
-msgid "change locale"
-msgstr "cambiar idioma"
+msgid "Polingo Feature Test Suite"
+msgstr "Suite de Pruebas de Polingo"
 
-#: src/App.tsx:20
-msgid "hello"
-msgstr "hola"
+msgid "Loading translations..."
+msgstr "Cargando traducciones..."
 
-#: src/App.tsx:23
-msgid "hello world. How are you?"
-msgstr "hola mundo. ¿Cómo estás?"
+msgid "Error loading translations: {error}"
+msgstr "Error al cargar traducciones: {error}"
 
-#: src/App.tsx:13
+msgid "Locale Control"
+msgstr "Control de Idioma"
+
 msgid "Current locale: {locale}"
 msgstr "Idioma actual: {locale}"
 
-#: src/App.tsx:27
+msgid "change locale"
+msgstr "cambiar idioma"
+
+msgid "Basic Translation - t()"
+msgstr "Traducción Básica - t()"
+
+msgid "hello"
+msgstr "hola"
+
+msgid "hello world. How are you?"
+msgstr "hola mundo. ¿Cómo estás?"
+
+msgid "Multiple Variables"
+msgstr "Variables Múltiples"
+
+msgid "Welcome {name}, you have {count} new notifications"
+msgstr "Bienvenida {name}, tienes {count} notificaciones nuevas"
+
+msgid "Pluralization - tn()"
+msgstr "Pluralización - tn()"
+
 msgid "You clicked {count} time"
 msgid_plural "You clicked {count} times"
 msgstr[0] "Has pulsado {count} vez"
 msgstr[1] "Has pulsado {count} veces"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Context Translation - tp()"
+msgstr "Traducción con Contexto - tp()"
+
+msgid "Menu context:"
+msgstr "Contexto de menú:"
+
+msgctxt "menu"
+msgid "File"
+msgstr "Archivo"
+
+msgid "Document context:"
+msgstr "Contexto de documento:"
+
+msgctxt "document"
+msgid "File"
+msgstr "Expediente"
+
+msgid "Toolbar context:"
+msgstr "Contexto de barra de herramientas:"
+
+msgctxt "toolbar"
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Confirmation context:"
+msgstr "Contexto de confirmación:"
+
+msgctxt "confirmation"
+msgid "Save"
+msgstr "¿Guardar?"
+
+msgid "Context + Pluralization - tnp()"
+msgstr "Contexto + Pluralización - tnp()"
+
+msgctxt "email"
+msgid "You have {count} message"
+msgid_plural "You have {count} messages"
+msgstr[0] "Tienes {count} correo electrónico"
+msgstr[1] "Tienes {count} correos electrónicos"
+
+msgid "Add Email"
+msgstr "Agregar Correo"
+
+msgid "Remove Email"
+msgstr "Quitar Correo"
+
+msgctxt "sms"
+msgid "You have {count} message"
+msgid_plural "You have {count} messages"
+msgstr[0] "Tienes {count} mensaje de texto"
+msgstr[1] "Tienes {count} mensajes de texto"
+
+msgid "Add SMS"
+msgstr "Agregar SMS"
+
+msgid "Remove SMS"
+msgstr "Quitar SMS"
+
+msgid "Missing Translation (Fallback)"
+msgstr "Traducción Faltante (Fallback)"
+
+msgid "(Should show the original English text)"
+msgstr "(Debería mostrar el texto original en inglés)"

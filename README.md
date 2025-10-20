@@ -1,73 +1,313 @@
-# React + TypeScript + Vite
+# Polingo Testing Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a comprehensive testing application for [Polingo](https://github.com/ragnarok22/polingo) - a modern i18n library for JavaScript/TypeScript using industry-standard `.po` and `.mo` files.
 
-Currently, two official plugins are available:
+## 🎯 Purpose
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project serves as a live demonstration and testing suite for all Polingo features, including:
 
-## React Compiler
+- ✅ Basic translation - `t()`
+- ✅ Pluralization - `tn()`
+- ✅ Context translation - `tp()`
+- ✅ Context + Pluralization - `tnp()`
+- ✅ Multiple variable interpolation
+- ✅ Loading and error states
+- ✅ Locale switching
+- ✅ Fallback behavior
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Setup
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js >= 18.0.0
+- pnpm >= 8.0.0
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone or navigate to the project:**
+   ```bash
+   cd testing-polingo
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   pnpm dev
+   ```
+
+4. **Open your browser:**
+   Navigate to [http://localhost:5173](http://localhost:5173)
+
+## 📁 Project Structure
+
+```
+testing-polingo/
+├── src/
+│   ├── App.tsx              # Main test suite component
+│   ├── main.tsx             # App entry point with PolingoProvider
+│   └── ...
+├── locales/                 # Source .po files
+│   ├── en/
+│   │   └── messages.po      # English translations
+│   └── es/
+│       └── messages.po      # Spanish translations
+├── public/
+│   └── i18n/                # Compiled JSON files (served at runtime)
+│       ├── en/
+│       │   └── messages.json
+│       └── es/
+│           └── messages.json
+└── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌍 Managing Translations
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Adding New Translations
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+There are two approaches to adding new translations:
+
+#### Option 1: Manual Extraction (Recommended)
+
+1. **Add translation calls in your source code:**
+   ```tsx
+   // In src/App.tsx or any component
+   {t('My new translation string')}
+   ```
+
+2. **Extract messages from source code:**
+   ```bash
+   # From the main polingo project directory
+   node packages/cli/dist/cli.js extract src/ --out locales/messages.pot --locales locales
+   ```
+
+   This will:
+   - Scan all files in `src/` for translation calls
+   - Update existing `.po` files in `locales/en/` and `locales/es/`
+   - Preserve existing translations
+
+3. **Edit the `.po` files** to add translations:
+   ```po
+   # locales/es/messages.po
+   msgid "My new translation string"
+   msgstr "Mi nueva cadena de traducción"
+   ```
+
+4. **Compile to JSON:**
+   ```bash
+   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   ```
+
+5. **Refresh the browser** to see your new translations!
+
+#### Option 2: Manual Editing
+
+1. **Directly edit `.po` files** in `locales/en/` and `locales/es/`:
+   ```po
+   # locales/es/messages.po
+   msgid "New feature title"
+   msgstr "Título de nueva función"
+   ```
+
+2. **For plurals**, use `msgid_plural`:
+   ```po
+   msgid "You have {count} item"
+   msgid_plural "You have {count} items"
+   msgstr[0] "Tienes {count} elemento"
+   msgstr[1] "Tienes {count} elementos"
+   ```
+
+3. **For context**, use `msgctxt`:
+   ```po
+   msgctxt "menu"
+   msgid "File"
+   msgstr "Archivo"
+
+   msgctxt "document"
+   msgid "File"
+   msgstr "Expediente"
+   ```
+
+4. **Compile to JSON:**
+   ```bash
+   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   ```
+
+### Removing Translations
+
+1. **Remove the translation call** from source code
+2. **Remove the entry** from `.po` files in `locales/en/` and `locales/es/`
+3. **Recompile to JSON:**
+   ```bash
+   node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+   ```
+
+### Validating Translations
+
+Check for missing or fuzzy translations:
+
+```bash
+# Basic validation
+node ../polingo/packages/cli/dist/cli.js validate locales
+
+# Strict validation (fails on fuzzy entries)
+node ../polingo/packages/cli/dist/cli.js validate locales --strict
 ```
+
+## 🔧 CLI Commands Reference
+
+All commands assume you're in the `testing-polingo` directory and have built the Polingo CLI:
+
+### Build the CLI (do this first!)
+
+```bash
+cd ../polingo
+pnpm --filter @polingo/cli build
+cd ../testing-polingo
+```
+
+### Extract Messages
+
+```bash
+node ../polingo/packages/cli/dist/cli.js extract src/ --out locales/messages.pot --locales locales
+```
+
+**Options:**
+- `src/` - Directory to scan for translation calls
+- `--out` - Output path for `.pot` template
+- `--locales` - Path to locales directory (will update existing `.po` files)
+
+### Compile Translations
+
+```bash
+node ../polingo/packages/cli/dist/cli.js compile locales/ --format json --out public/i18n
+```
+
+**Options:**
+- `locales/` - Input directory containing `.po` files
+- `--format` - Output format: `json` or `mo` (default: `json`)
+- `--out` - Output directory for compiled files
+
+### Validate Translations
+
+```bash
+# Basic validation
+node ../polingo/packages/cli/dist/cli.js validate locales
+
+# Strict mode (fails on fuzzy translations)
+node ../polingo/packages/cli/dist/cli.js validate locales --strict
+```
+
+## 🎨 Features Tested
+
+### Basic Translation - `t()`
+Simple message translation with optional variable interpolation.
+```tsx
+{t('hello')}
+{t('Current locale: {locale}', { locale })}
+```
+
+### Pluralization - `tn()`
+Handles plural forms based on count.
+```tsx
+{tn('You clicked {count} time', 'You clicked {count} times', count, { count })}
+```
+
+### Context Translation - `tp()`
+Disambiguates words with the same spelling but different meanings.
+```tsx
+{tp('menu', 'File')}      // → "Archivo" (ES)
+{tp('document', 'File')}  // → "Expediente" (ES)
+```
+
+### Context + Pluralization - `tnp()`
+Combines context and plural forms.
+```tsx
+{tnp('email', 'You have {count} message', 'You have {count} messages', emails, { count: emails })}
+{tnp('sms', 'You have {count} message', 'You have {count} messages', sms, { count: sms })}
+```
+
+### Multiple Variables
+Interpolate multiple variables in a single translation.
+```tsx
+{t('Welcome {name}, you have {count} new notifications', { name: userName, count: 5 })}
+```
+
+### Loading & Error States
+The `usePolingo()` hook exposes loading and error states during catalog loading.
+```tsx
+const { loading, error } = usePolingo();
+```
+
+### Fallback Behavior
+When a translation doesn't exist, Polingo returns the original `msgid`.
+
+## 🛠️ Development Tips
+
+### Cache Management
+
+This app disables caching in development (see `src/main.tsx`). To enable caching in production:
+
+```tsx
+<PolingoProvider create={{
+  locale: 'en',
+  locales: ['en', 'es'],
+  loader: { baseUrl: '/i18n' },
+  cache: import.meta.env.PROD, // Only cache in production
+}}>
+  <App />
+</PolingoProvider>
+```
+
+### Hot Module Replacement
+
+Vite will automatically reload when you:
+- Modify source code (`.tsx` files)
+- Update compiled JSON files in `public/i18n/`
+
+**Note:** If translations don't update, recompile with the CLI and refresh the browser.
+
+### Dark Mode Support
+
+All test sections use semi-transparent backgrounds with colored borders, ensuring readability in both light and dark modes.
+
+## 📚 Learn More
+
+- [Polingo Documentation](https://github.com/ragnarok22/polingo)
+- [gettext PO Format](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html)
+- [React Integration Guide](https://github.com/ragnarok22/polingo/tree/main/packages/react)
+
+## 🐛 Troubleshooting
+
+### Translations not updating?
+
+1. Make sure you compiled the `.po` files to JSON
+2. Check that JSON files exist in `public/i18n/en/` and `public/i18n/es/`
+3. Clear browser cache or hard refresh (Ctrl+Shift+R / Cmd+Shift+R)
+4. Restart the dev server
+
+### CLI command not found?
+
+Build the Polingo CLI first:
+```bash
+cd ../polingo
+pnpm --filter @polingo/cli build
+```
+
+### Plural forms not working?
+
+Make sure you're passing the variables correctly:
+```tsx
+// ❌ Wrong
+{tn('You have {count} item', 'You have {count} items', count)}
+
+// ✅ Correct
+{tn('You have {count} item', 'You have {count} items', count, { count })}
+```
+
+## 📄 License
+
+MIT

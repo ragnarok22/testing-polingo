@@ -11,10 +11,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/App.tsx:11
+#: src/App.tsx:16
 msgid "change locale"
 msgstr "cambiar idioma"
 
-#: src/App.tsx:15
+#: src/App.tsx:20
 msgid "hello"
 msgstr "hola"
+
+#: src/App.tsx:23
+msgid "hello world. How are you?"
+msgstr "hola mundo. ¿Cómo estás?"
+
+#: src/App.tsx:13
+msgid "Current locale: {locale}"
+msgstr "Idioma actual: {locale}"
+
+#: src/App.tsx:27
+msgid "You clicked {count} time"
+msgid_plural "You clicked {count} times"
+msgstr[0] "Has pulsado {count} vez"
+msgstr[1] "Has pulsado {count} veces"

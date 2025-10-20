@@ -10,6 +10,8 @@ createRoot(document.getElementById('root')!).render(
       locale: 'en',
       locales: ['en', 'es'],
       loader: { baseUrl: '/i18n' },
+      // Disable cache in development to always load fresh translations
+      // cache: import.meta.env.PROD,
     }}>
       <App />
     </PolingoProvider>

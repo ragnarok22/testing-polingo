@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import './App.css'
-import { useTranslation } from '@polingo/react'
+import { useLocale, useTranslation } from '@polingo/react'
 
 function App() {
-  const { t, locale, setLocale } = useTranslation();
+  const [count, setCount] = useState(0);
+  const { t, tn } = useTranslation();
+  const { locale, setLocale } = useLocale();
 
   return (
     <div>
-      <p>Current locale: {locale}</p>
+      <p>
+        {t('Current locale: {locale}', { locale })}
+      </p>
       <button onClick={() => setLocale(locale === 'en' ? 'es' : 'en')}>
         {t('change locale')}
       </button>
@@ -14,6 +19,13 @@ function App() {
       <p>
         {t('hello')}
       </p>
+      <p>
+        {t('hello world. How are you?')}
+      </p>
+
+      <button onClick={() => setCount(prev => prev + 1)}>
+        {tn('You clicked {count} time', 'You clicked {count} times', count, { count })}
+      </button>
     </div>
   )
 }
